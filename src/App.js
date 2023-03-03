@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import React, { useState } from "react";
+import Users from "./components/users";
+import api from "./api";
+const App = () => {
+  const [users, setUsers] = useState(api.users.fetchAll());
+  // console.log(users, "Стейт");
+  //   console.log(setUsers, "фунцкия позволяющая изменять наш Стейт");
+  const hendeleDelete = (userId) => {
+    setUsers(users.filter((user) => user._id !== userId));
+  };
+  const switchingBookmark = (id) => {
+    setUsers(
+      users.map((user) => {
+        if (user._id === id) {
+          return { ...user, bookmark: !user.bookmark };
+        }
+        return user;
+      })
+    );
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Users
+      users={users}
+      onDelete={hendeleDelete}
+      onBookmark={switchingBookmark}
+    />
   );
-}
+};
 
 export default App;
