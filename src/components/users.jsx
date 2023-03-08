@@ -1,15 +1,21 @@
-import { noConflict } from "lodash";
 import React, { useState } from "react";
 import Pagination from "./pagination";
-
 import SearchStatus from "./searchStatus";
 import User from "./user";
+import api from "../api";
 import { paginate } from "./utils/paginate";
+import GroupList from "./groupList";
 
 const Users = ({ users, ...rest }) => {
     const count = users.length;
     const pageSize = 4;
+    const handleProfessionsSelect = (params) => {
+        console.log(params);
+    };
+    console.log(professions);
+
     const [currentPage, setCurrentPage] = useState(1);
+    const [professions] = useState(api.professions.fetchAll());
     const handlePageChange = (pageIndex) => {
         console.log("page:", pageIndex);
         setCurrentPage(pageIndex);
@@ -19,6 +25,10 @@ const Users = ({ users, ...rest }) => {
 
     return (
         <>
+            <GroupList
+                items={professions}
+                onItemSelect={handleProfessionsSelect}
+            />
             <SearchStatus length={users.length} />
             <table className="table">
                 {count > 0 && (

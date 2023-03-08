@@ -13,7 +13,10 @@ module.exports = {
     rules: {
         indent: ["error", 4], // Правило: Отступы должны быть равны 4-м
         semi: [2, "always"], // Правило: Добавление ;
-        "space-before-function-paren": ["error", "never"], // Правило: Чтобы небыло пробелов перед функциями
+        "space-before-function-paren": [
+            "error",
+            { anonymous: "always", named: "never" },
+        ], // Правило: Чтобы небыло пробелов перед Анонимными функциями, а перед Именными были
         quores: ["error", "Double", { allowTemplateLiterals: true }], //  Правило: Разрешается добавление "Двойных ковычек"
     },
 };
