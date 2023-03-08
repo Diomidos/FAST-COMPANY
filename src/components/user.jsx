@@ -10,7 +10,7 @@ const User = ({
     qualities,
     onDelete,
     onBookmark,
-    bookmark,
+    bookmark
 }) => {
     return (
         <>
