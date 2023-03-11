@@ -1,15 +1,14 @@
 import React from "react";
-const Boockmark = ({ status, ...rest }) => {
+import PropTypes from "prop-types";
+const BookMark = ({ status, ...rest }) => {
     return (
-        <button className="btn btn-light" {...rest}>
-            <i
-                className={
-                    "bi bi-balloon-heart" +
-                    (status ? "bi bi-balloon-heart-fill" : "")
-                }
-            ></i>
+        <button {...rest}>
+            <i className={"bi bi-bookmark" + (status ? "-heart-fill" : "")}></i>
         </button>
     );
 };
+BookMark.propTypes = {
+    status: PropTypes.bool
+};
 
-export default Boockmark;
+export default BookMark;

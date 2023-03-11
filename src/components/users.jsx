@@ -1,66 +1,53 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { paginate } from "../utils/paginate";
 import Pagination from "./pagination";
-import SearchStatus from "./searchStatus";
 import User from "./user";
-import api from "../api";
-import { paginate } from "./utils/paginate";
 import GroupList from "./groupList";
-
-const Users = ({ users, ...rest }) => {
-    const count = users.length;
-    const pageSize = 4;
-    const handleProfessionsSelect = (params) => {
-        console.log(params);
-    };
-    console.log(professions);
-
+const Users = ({ users: allUsers, ...rest }) => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [professions] = useState(api.professions.fetchAll());
+    const count = allUsers.length;
+    const pageSize = 4;
+
     const handlePageChange = (pageIndex) => {
-        console.log("page:", pageIndex);
         setCurrentPage(pageIndex);
+        console.log("page: ", pageIndex);
     };
-
-    const userCrop = paginate(users, currentPage, pageSize);
-
+    const usersCrop = paginate(allUsers, currentPage, pageSize);
     return (
         <>
-            <GroupList
-                items={professions}
-                onItemSelect={handleProfessionsSelect}
-            />
-            <SearchStatus length={users.length} />
-            <table className="table">
-                {count > 0 && (
-                    //   ""
-                    // ) : (
+            <GroupList />
+            {count > 0 && (
+                <table className="table">
                     <thead>
                         <tr>
                             <th scope="col">Имя</th>
-                            <th scope="col">Качество</th>
-                            <th scope="col">Профессия</th>
-                            <th scope="col">Встретился, кол. раз</th>
+                            <th scope="col">Качества</th>
+                            <th scope="col">Провфессия</th>
+                            <th scope="col">Встретился, раз</th>
                             <th scope="col">Оценка</th>
-                            <th scope="col">Избранные</th>
-                            <th scope="col">Удалить</th>
+                            <th scope="col">Избранное</th>
+                            <th />
                         </tr>
                     </thead>
-                )}
-
-                <tbody>
-                    {userCrop.map((user) => (
-                        <User key={user._id} {...rest} {...user} />
-                    ))}
-                </tbody>
-            </table>
+                    <tbody>
+                        {usersCrop.map((user) => (
+                            <User {...rest} {...user} key={user._id} />
+                        ))}
+                    </tbody>
+                </table>
+            )}
             <Pagination
-                itemCount={count}
+                itemsCount={count}
                 pageSize={pageSize}
                 currentPage={currentPage}
                 onPageChange={handlePageChange}
             />
         </>
     );
+};
+Users.propTypes = {
+    users: PropTypes.array
 };
 
 export default Users;
