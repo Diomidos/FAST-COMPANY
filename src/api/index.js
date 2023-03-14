@@ -1,14 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-const BookMark = ({ status, ...rest }) => {
-    return (
-        <button {...rest}>
-            <i className={"bi bi-bookmark" + (status ? "-heart-fill" : "")}></i>
-        </button>
-    );
+import users from "./fake.api/user.api";
+import professions from "./fake.api/professions.api";
+const API = {
+    users,
+    professions
 };
-BookMark.propTypes = {
-    status: PropTypes.bool
-};
-
-export default BookMark;
+export default API;
